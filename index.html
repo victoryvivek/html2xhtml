@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>html2xHTML -Convert HTML to xHTML Infodecoder</title>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <script src="https://unpkg.com/prettier@2.2.1/standalone.js"></script>
+    <script src="https://unpkg.com/prettier@2.2.1/parser-html.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/highlight.min.js"></script>
+
+    <link
+      crossorigin="anonymous"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.6.0/styles/mono-blue.min.css"
+      integrity="sha512-OegGHxPi72ldjb3OkQBPQDjy6kXkUf8ssXSS/CosWPzVwNR0/xvcKGzvkVuaD8pwWVswIs0HXFXYhmFisaigXw=="
+      rel="stylesheet"
+    />
+
+    <link
+      rel="icon"
+      href="./images/website favicon.png"
+      type="image/png"
+      sizes="16x16"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header-image-wrapper">
+        <img
+          src="./images/infodecoder website display logo.png"
+          alt="INFODECODER Logo"
+          class="header-image"
+        />
+      </div>
+    </header>
+    <main>
+      <div>
+        <div class="language-type">
+          <div class="language-container">
+            <label>Enter the HTML Code </label>
+          </div>
+          <div class="format-code">
+            <button id="format-code-button" class="button">
+              Convert To xHTML
+            </button>
+          </div>
+        </div>
+        <div class="editor-container">
+          <div class="input-code">
+            <textarea name="" id="input-code-textarea"> </textarea>
+          </div>
+          <div class="output-code">
+            <pre>
+              
+              <code id="output-code" class="html">
+               
+              </code>
+              
+            </pre>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer></footer>
+    <script>
+      hljs.highlightAll();
+    </script>
+    <script>
+      function converttext(data) {
+        inputtext = data;
+        out = inputtext.replace(/\&/g, "&amp;");
+        out = out.replace(/\</g, "&lt;");
+        out = out.replace(/\>/g, "&gt;");
+        out = out.replace(/\"/g, "&quot;");
+        out = out.replace(/\'/g, "&#39;");
+        out = out.replace(/\|/g, "&#124;");
+        return out;
+      }
+
+      let classMap = {};
+      classMap["html"] = "html";
+      classMap["babel"] = "javascript";
+
+      $(document).ready(function() {
+        $("#format-code-button").click(function() {
+          let code = $("#input-code-textarea").val();
+          let langType = "html";
+          let res;
+          try {
+            res = converttext(code);
+          } catch (e) {
+            console.log(e);
+            res = "Some Error Occured....Please Try Again Later!!!!";
+            langType = "html";
+          }
+          res = "<xmp>" + res + "</xmp>";
+          $("#output-code").html(res);
+          $("#output-code").addClass(classMap[langType]);
+          // hljs.highlightAll();
+          console.log(res);
+        });
+      });
+    </script>
+  </body>
+</html>
